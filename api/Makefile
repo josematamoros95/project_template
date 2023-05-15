@@ -7,6 +7,7 @@ else
 endif
 
 PROJECT_IMAGE_NAME := "flask-api-app"
+WORK_DIR := api
 
 .PHONY: base-build
 base-build:
@@ -14,25 +15,25 @@ base-build:
 
 .PHONY: base-interactive
 base-interactive:
-	docker run -it --workdir="/src" -v $(APP_DIR):/src $(PROJECT_IMAGE_NAME) /bin/bash
+	docker run -it --workdir=/$(WORK_DIR) -v $(APP_DIR):/$(WORK_DIR) $(PROJECT_IMAGE_NAME) /bin/bash
 
 .PHONY: dependencies-install
 dependencies-install:
-	docker run -it --workdir="/src" -v $(APP_DIR):/src $(PROJECT_IMAGE_NAME) /bin/bash -ci "poetry install"
+	docker run -it --workdir=/$(WORK_DIR) -v $(APP_DIR):/$(WORK_DIR) $(PROJECT_IMAGE_NAME) /bin/bash -ci "poetry install"
 
 .PHONY: dependencies-update
 dependencies-update:
-	docker run -it --workdir="/src" -v $(APP_DIR):/src $(PROJECT_IMAGE_NAME) /bin/bash -ci "poetry update --lock"
+	docker run -it --workdir=/$(WORK_DIR) -v $(APP_DIR):/$(WORK_DIR) $(PROJECT_IMAGE_NAME) /bin/bash -ci "poetry update --lock"
 
 .PHONY: dependencies-add-package
 PACK_NAME ?= 'flask==2.3.2'
 dependencies-add-package:
-	docker run -it --workdir="/src" -v $(APP_DIR):/src $(PROJECT_IMAGE_NAME) /bin/bash -ci "poetry update add $(PACK_NAME)"
+	docker run -it --workdir=/$(WORK_DIR) -v $(APP_DIR):/$(WORK_DIR) $(PROJECT_IMAGE_NAME) /bin/bash -ci "poetry update add $(PACK_NAME)"
 
 .PHONY: flask-run-app
 PORT ?= 5000
 flask-run-app:
-	docker run -t --rm --env-file=.env --workdir="/src" -p $(PORT):$(PORT) -v $(APP_DIR):/src $(PROJECT_IMAGE_NAME) /bin/bash -ci "python src/app.py"
+	docker run -t --rm --env-file=.env --workdir=/$(WORK_DIR) -p $(PORT):$(PORT) -v $(APP_DIR):/$(WORK_DIR) $(PROJECT_IMAGE_NAME) /bin/bash -ci "flask --app run"
 
 .PHONY: docker-clean
 docker-clean:
