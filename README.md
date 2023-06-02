@@ -4,7 +4,7 @@ Porfavor, crear ramas personales y realizar pull requests con mucha evidencia y 
 
 Template basico de proyectos web:
 
-Este template está diseñado para tener estructuras básicas de herramientas básicas para un proyecto de desarrollo web:
+Este template está diseñado para tener estructuras básicas de herramientas para un proyecto de desarrollo web:
 1.- Airflow: como orquestador para procesos, pipelines de ingeniería de datos (ETL)
 2.- API: un api rest para comunicación entre base de datos, kedro, streamlit, front y otros clientes.
 3.- DB: un motor de base de datos. Por ahora se opta por PostgreSQL
